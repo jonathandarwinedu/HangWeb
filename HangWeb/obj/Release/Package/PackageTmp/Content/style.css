@@ -1,0 +1,55 @@
+.errorMsg{
+	color:red;
+}
+.nav-edit{
+	background-color: #158CBA !important;
+	position: fixed;
+	width:82.5%;
+}
+.top-header{
+	color:#1E90FF;	
+	/* abu2 = #999999 */
+}
+.active-level{
+	background-color: #e6e6e6;	
+}
+.content{
+	border:1px solid #eeeeee;
+	border-radius:5px;	
+	padding:20px;
+}
+.question{
+	padding:10px;
+	border:1px solid #eeeeee;
+	border-radius:5px;	
+	margin:10px;	
+}
+.title{
+	color:#1E90FF;
+}
+.body-content{
+    margin-top:20px;
+}
+.play{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius : 5px;
+}
+.Answer{
+    padding:5px;
+}
+.blank{
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.lblWrong, .lblWarning{
+    color:red;
+}
+.tombol{
+	border:0px;
+	border-radius:4px 10px;
+	padding:5px 7px;
+	text-shadow:2px 2px 5px #000000;
+    background-color:blue;
+    color:white;
+}

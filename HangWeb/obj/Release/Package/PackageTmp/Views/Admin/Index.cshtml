@@ -1,0 +1,121 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin</title>
+    @Styles.Render("~/Content/bootstrapcss")
+    @Scripts.Render("~/bundles/bootstrapjs")
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>    
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="navbar">
+                        <div class="navbar-inner nav-edit">
+                            <div class="brand">@Html.ActionLink("Hang Web", "Index", "Admin")</div>
+                            <ul class="nav pull-left">
+                                <li class="navigation">@Html.ActionLink("Aprrove Questions", "Index", "Admin")</li>
+                            </ul>
+
+                            <ul class="nav pull-right">
+                                @if (Session["User"] != null)
+                                {
+                                    <li><a href="#">Welcome, @Session["User"]</a></li>
+                                    <li>@Html.ActionLink("Log Out", "LogOut", "User")</li>
+
+                                }                                                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container body-content">
+                <div class="row">
+                    <div class="span12 top-header">
+                        <h1>Question</h1>
+                        <hr>
+                    </div>
+                </div>
+
+                <!-- END OF HEADER -->
+                <!-- CONTENT -->
+                <div class="row">
+                    <div class="span8 offset2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Question</th>
+                                    <th>Answer</th>
+                                    <th>Question By</th>
+                                    <th>Approve</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>                                
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@(i + 1)</td>
+                                        <td>@Model[i].Question</td>
+                                        <td>@Model[i].Answer</td>
+                                        <td>@Model[i].QuestionBy</td>
+                                        <td>
+                                            <button class="btn btn-primary" value="@Model[i].IDQuestion">Easy</button>
+                                            <button class="btn btn-warning" value="@Model[i].IDQuestion">Medium</button>
+                                            <button class="btn btn-danger" value="@Model[i].IDQuestion">Hard</button>
+                                            <button class="btn btn-danger" value="@Model[i].IDQuestion">Decline</button>
+                                        </td>
+                                    </tr>
+                                }                                                                
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- END OF CONTENT -->
+                    <!-- MODEL -->
+                    <!-- END OF MODEL -->
+
+                </div>
+
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </footer>
+            </div>        
+        </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $('button').click(function () {
+            var id = $(this).val();
+            var difficulty = $(this).text();
+
+            $.ajax({
+                url: '@Url.Action("UpdateQuestion","Admin")',
+                type:'POST',
+                data: {
+                    IDQuestion: id,
+                    Difficulty: difficulty
+                },
+                success: function (data) {                    
+                    window.location = '@Url.Action("Index","Admin")';
+                },
+                error: function (data) {
+                    alert("Failed Update Question");
+                    window.location = '@Url.Action("Index","Admin")';
+                }
+            });
+        });
+    });
+</script>

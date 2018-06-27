@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/bootstrapcss")
+    @Scripts.Render("~/bundles/bootstrapjs")
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="navbar">
+                    <div class="navbar-inner nav-edit">
+                        <div class="brand">@Html.ActionLink("HangWeb", "Index", "Home")</div>
+                        <ul class="nav pull-left">
+                            <li class="navigation">@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li class="navigation">@Html.ActionLink("Make a Question", "Index", "MakeQuestion")</li>
+                            <li class="navigation">@Html.ActionLink("High Score", "Index", "HighScore")</li>
+                        </ul>
+
+                        <ul class="nav pull-right">
+                            @if (Session["User"] != null)
+                            {
+                                <li><a href="#">Welcome, @Session["User"]</a></li>                                
+                                <li>@Html.ActionLink("Log Out","LogOut","User")</li>
+                                
+                            }
+                            else
+                            {
+                                @*<li>@Html.ActionLink("Log In", "_LogIn", "User")</li>
+                                <li>@Html.ActionLink("Register", "_Register", "User")</li>*@
+                                <li><a href="#" id="logIn">Log In</a></li>
+                                <li><a href="#" id="register">Register</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Project OOP</p>
+            </footer>
+        </div>
+    </div>
+
+    <div id="modalLogIn" class="modal fade" role="dialog" aria-hidden="false" aria-labelledby="myModalLabel" tabindex="-1">
+
+    </div>
+    
+    <div id="modalRegister" class="modal fade" role="dialog" aria-hidden="false" aria-labelledby="myModalLabel" tabindex="-1">
+
+    </div>
+    
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+
+        var fullURL = window.location.search.substring(1);        
+        var parameter = fullURL.split('?');
+
+        if (parameter == "failed") {
+            swal({
+                title: "Failed Login",
+                text: "Incorrect Username / Password",
+                icon: "error"
+            });
+        } else if (parameter == "success") {
+            swal({
+                title: "Success Login",
+                text: "Hello, @Session["User"]!",
+                icon: "success"
+            });        
+        } else if (parameter == 'm' || parameter == 'p' ) {
+            $('#modalRegister').load('/User/_Register', function () {
+                $('#modalRegister').modal('show');
+            });
+        } else if (parameter == "exists") {
+            $('#modalRegister').load('/User/_Register', function () {
+                $('#modalRegister').modal('show');
+            });
+        } else if (parameter == "regisSuccess") {
+            swal({
+                title: "Registration Success",                
+                icon: "success"
+            });        
+        } else if(parameter == "regisFailed"){
+            swal({
+                title: "Registration Failed, Try Again Later...",
+                icon: "error"
+            });
+        } else if (parameter == "invalid") {
+            swal({
+                title: "Please login first",
+                icon :"error"
+            });
+        } else if (parameter == "error") {
+            swal({
+                title: "Error",
+                text:"Cannot get the question, please try again later",
+                icon: "error"
+            });
+        } else if (parameter == "updateQuestionFailed") {
+            swal({
+                title: "Error",
+                text: "Cannot update the question, please try again",
+                icon: "error"
+            });
+        }
+
+        $('#logIn').click(function () {
+            $('#modalLogIn').load('/User/_LogIn', function () {
+                $('#modalLogIn').modal('show');
+            });
+        });
+
+        $('#register').click(function () {
+            $('#modalRegister').load('/User/_Register', function () {
+                $('#modalRegister').modal('show');
+            });
+        });
+    });
+</script>

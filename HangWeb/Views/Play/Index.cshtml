@@ -1,0 +1,207 @@
+﻿@model HangWeb.Models.Questions
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Done","Play",FormMethod.Post,new { enctype = "form/multipart", id="formPlay" }))
+{
+    @Html.HiddenFor(model => model.Difficulty)
+    @Html.HiddenFor(model => model.IDQuestion)
+    @Html.Hidden("Status");
+}
+
+<div class="row">
+    <div class="span12">
+        <h1>Question by @Model.NameQuestionBy</h1>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <h2>Q : @Model.Question</h2>
+    </div>
+</div>
+
+<div class="row blank">
+    <div class="span12 play">                
+    </div>
+</div>
+
+<div class="row blank">
+    <div class="span12 lblWarning">
+        Your Maximum Wrong : 5
+    </div>
+</div>
+
+<div class="row blank">    
+    <div class="span12 lblWrong">        
+    </div>    
+</div>
+
+<div class="row">
+    <div class="span12">
+        <button value="A" class="tombol">A</button>
+        <button value="B" class="tombol">B</button>
+        <button value="C" class="tombol">C</button>
+        <button value="D" class="tombol">D</button>
+        <button value="E" class="tombol">E</button>
+        <button value="F" class="tombol">F</button>
+        <button value="G" class="tombol">G</button>
+        <button value="H" class="tombol">H</button>
+        <button value="I" class="tombol">I</button>
+        <button value="J" class="tombol">J</button>
+                          
+        <button value="K" class="tombol">K</button>
+        <button value="L" class="tombol">L</button>
+        <button value="M" class="tombol">M</button>
+        <button value="N" class="tombol">N</button>
+        <button value="O" class="tombol">O</button>
+        <button value="P" class="tombol">P</button>
+        <button value="Q" class="tombol">Q</button>
+        <button value="R" class="tombol">R</button>
+        <button value="S" class="tombol">S</button>
+        <button value="T" class="tombol">T</button>
+                          
+        <button value="U" class="tombol">U</button>
+        <button value="V" class="tombol">V</button>
+        <button value="W" class="tombol">W</button>
+        <button value="X" class="tombol">X</button>
+        <button value="Y" class="tombol">Y</button>
+        <button value="Z" class="tombol">Z</button>
+                          
+        <div class="blank"></div>
+                          
+        <button value="1" class="tombol">1</button>
+        <button value="2" class="tombol">2</button>
+        <button value="3" class="tombol">3</button>
+        <button value="4" class="tombol">4</button>
+        <button value="5" class="tombol">5</button>
+                          
+        <button value="6" class="tombol">6</button>
+        <button value="7" class="tombol">7</button>
+        <button value="8" class="tombol">8</button>
+        <button value="9" class="tombol">9</button>
+        <button value="0" class="tombol">0</button>
+                          
+        <div class="blank"></div>
+                          
+        <button value="~" class="tombol">~</button>
+        <button value="!" class="tombol">!</button>        
+        <button value="#" class="tombol">#</button>
+        <button value="$" class="tombol">$</button>
+        <button value="%" class="tombol">%</button>
+        <button value="^" class="tombol">^</button>
+        <button value="&" class="tombol">&</button>
+        <button value="*" class="tombol">*</button>
+        <button value="(" class="tombol">(</button>
+                          
+        <button value=")" class="tombol">)</button>
+        <button value="_" class="tombol">_</button>
+        <button value="+" class="tombol">+</button>
+        <button value="-" class="tombol">-</button>
+        <button value="=" class="tombol">=</button>
+        <button value="[" class="tombol">[</button>
+        <button value="]" class="tombol">]</button>
+        <button value="{" class="tombol">{</button>
+        <button value="}" class="tombol">}</button>
+        <button value="\" class="tombol">\</button>
+
+        <button value="/" class="tombol">/</button>
+        <button value="|" class="tombol">|</button>
+        <button value="?" class="tombol">?</button>
+        <button value=">" class="tombol">></button>
+        <button value="," class="tombol">,</button>
+        <button value="." class="tombol">.</button>
+        <button value="`" class="tombol">`</button>
+        
+       
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var Answer = "@Model.Answer";
+        var length = Answer.length;
+        var wrong = 0;
+
+        $('.lblWrong').text('Wrong : '+wrong);
+
+        function createTable() {
+            var label = "<span class='lblAnswer" + i + " Answer'>_</span>";
+            var label2 = "<span class='lblAnswer" + i + " Answer'> </span>";
+            if (Answer[i] == " ") {
+                $('.play').append(label2);
+            } else {
+                $('.play').append(label);
+            }
+            
+        }
+
+        for (var i=0; i<length; i++){
+            createTable();
+        }
+
+        $('button').click(function () {
+            
+            $(this).css('background-color','red');
+            $(this).attr('disabled',true);
+
+            var button = $(this);
+            var benar = 0;
+            var flag = 0;
+
+            for (var i=0; i<length; i++){
+                if (button.val() == Answer[i]){
+                    $('.lblAnswer'+i).text(Answer[i]);
+                    flag = 1;
+                }
+            }// END OF FOR CHECKING THE PRESSED BUTTON
+
+            for (var i=0; i<length; i++){
+                if (Answer[i] == $('.lblAnswer'+i).text()){
+                    benar = benar + 1;
+                }
+            }
+            console.log("benar : " + benar + ", length : " + length);
+            // IF WIN
+            if (benar == length){
+                swal({
+                    title:'Congratulations!',
+                    text:'You have answered the question correctly!',
+                    icon:'success'
+                }).then((isConfirm) => {
+                    if (isConfirm) {
+                        $('#Status').val(1);
+                        $('#formPlay').submit();
+                    }
+                });
+               
+            }
+
+            if (flag == 0){
+                wrong = wrong + 1;
+                $('.lblWrong').text('Wrong : '+wrong);
+
+                if (wrong == 5){
+                    swal({
+                        title: "You lose",
+                        text: "Redirecting to home page...",
+                        icon: 'error',
+                        confirmButtonText: "OK"
+                    }).then((isConfirm) => {
+                        if (isConfirm) {
+                            $('#Status').val(0);
+                            $('#formPlay').submit();
+                        }
+                    });
+                    
+                    
+                }
+            }
+            
+
+        });
+    });
+</script>
+

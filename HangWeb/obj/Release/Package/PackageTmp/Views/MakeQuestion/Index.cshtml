@@ -1,0 +1,58 @@
+﻿@model HangWeb.Models.Questions
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="span12 top-header">
+        <h1>Make a Question</h1>
+        <hr />
+    </div>
+</div><!-- END OF DIV HEADER-->
+
+<div class="row">
+    <div class="span12">
+        @using (Html.BeginForm("InsertQuestion", "MakeQuestion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => model.QuestionBy)
+            <h3>Question</h3>            
+            @Html.TextBoxFor(model => model.Question)
+            <br />
+            <span class="errorMsg">
+                @Html.ValidationMessageFor(model => model.Question)
+            </span>
+            <br />
+            <h3>Answer</h3>
+            @Html.TextBoxFor(model => model.Answer)
+            <br />
+            <span class="errorMsg">
+                @Html.ValidationMessageFor(model => model.Answer)
+            </span>
+            
+            <br />
+            <br />
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var fullURL = window.location.search.substring(1);
+        var parameter = fullURL.split('?');
+
+        if (parameter == "insertQuestionSuccess") {
+            swal({
+                title: "Your Question Has Been Submitted",
+                icon:"success"
+            });
+        } else if (parameter == "insertQuestionFailed") {
+            swal({
+                title: "Your Question Cannot Be Submitted",
+                text: "Please try again later",
+                icon: "error"
+            });
+        }
+    });
+</script>

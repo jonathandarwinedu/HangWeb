@@ -1,0 +1,46 @@
+﻿@model List<HangWeb.Models.HighScore>
+@{
+    ViewBag.Title = "High Score";
+}
+
+
+<div class="row">
+    <div class="span12 top-header">
+        <h1>High Score</h1>
+        <hr>
+    </div>
+</div>
+
+<!-- END OF HEADER -->
+<!-- CONTENT -->
+<div class="row">
+    <div class="span8 offset2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Point</th>
+                </tr>                
+            </thead>
+
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr id="@Model[i].IDUser" class="highScoreRow">
+                        <td>@(i + 1)</td>
+                        <td>@Model[i].Name</td>
+                        <td>@Model[i].Point</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- END OF CONTENT -->
+    <!-- MODEL -->
+    
+
+    <!-- END OF MODEL -->
+
+</div>

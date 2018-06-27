@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+<div class="row">
+    <div class="span12 top-header">
+        <h1>Home</h1>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="span3 level">
+        <ul class="nav nav-tabs nav-stacked">
+            <li id="easy"><a href="#">Easy</a></li>
+            <li id="medium"><a href="#">Medium</a></li>
+            <li id="hard"><a href="#">Hard</a></li>
+        </ul>
+    </div>
+
+    <div class="span8 content" id="homeContent">
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // init
+        $('#homeContent').load('@Url.Action("_Difficulty","Home", new { difficulty=1})');
+
+
+        $('#easy').click(function () {
+            $('#homeContent').load('@Url.Action("_Difficulty","Home", new { difficulty=1})');
+        });
+
+        $('#medium').click(function () {
+            $('#homeContent').load('@Url.Action("_Difficulty","Home", new { difficulty=2})');
+        });
+
+        $('#hard').click(function () {
+            $('#homeContent').load('@Url.Action("_Difficulty","Home", new { difficulty=3})');
+        });       
+    });
+</script>

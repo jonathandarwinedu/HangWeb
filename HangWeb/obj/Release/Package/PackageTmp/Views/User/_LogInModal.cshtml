@@ -1,0 +1,40 @@
+﻿@model HangWeb.Models.UserLogIn
+<!-- MODAL REGISTER AND LOGIN -->
+@using (Ajax.BeginForm("doLogin", "User", new AjaxOptions() { HttpMethod = "POST"}, new { id="formLogin"}))
+{
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Log In</h3>
+    </div>
+    <div class="modal-body">            
+        <label>Username</label>
+        @Html.TextBoxFor(model => model.Username, new { id="txtUsername"})
+        <br />        
+        <br />            
+        <label>Password</label>
+        @Html.TextBoxFor(model => model.Password, new { type="password", id="txtPassword"})                    
+        <br />
+        <br />                        
+        <span class="errorMsg"></span>
+        <br />   
+        <br />
+        <button type="button" id="btnLogin" class="btn btn-primary">Log In</button>
+    </div>    
+}
+
+<script>    
+    $(document).ready(function () {
+        $('#btnLogin').click(function () {
+            if ($('#txtUsername').val().trim() == "" || $('#txtPassword').val().trim() == "") {
+                $('.errorMsg').text('Please fill all the form');
+            } else {
+                $('#formLogin').submit();
+            }
+        });
+
+
+    });
+    
+</script>
+
+

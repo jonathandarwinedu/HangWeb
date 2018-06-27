@@ -1,0 +1,70 @@
+﻿@model HangWeb.Models.User
+<!-- REGISTER MODAL -->
+<!-- VALIDASI PANJANG NAMA, PANJANG PASSWORD NANTI DIATUR AJA -->
+<div id="a">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Register</h3>
+    </div>
+    @using (Html.BeginForm("doRegister", "User", FormMethod.Post))
+    {
+        <div class="modal-body">
+            <!-- <form action="config/doRegister.php" action="POST"> -->
+            <br>
+            <label for="txtUsernameRegister">Username</label>
+            @*<input type="email" name="usernameRegister" id="txtUsernameRegister" placeholder="Input Username" required>*@
+            @Html.TextBoxFor(model => model.Username, new { autocomplete = "off"})
+            <br>
+            <br>
+
+            <label for="txtNameRegister">Name</label>
+            @*<input type="text" name="nameRegister" id="txtNameRegister" placeholder="Input Your Name" required>*@
+            @Html.TextBoxFor(model => model.Name, new { autocomplete = "off" })
+
+            <br>
+            <br>
+
+            <label for="txtPasswordRegister">Password</label>
+            @*<input type="password" name="passwordRegister" id="txtPasswordRegister" placeholder="Input Password" required>*@
+            @Html.TextBoxFor(model => model.Password, new { type="password"})
+            <br>
+            <br>
+
+            <label for="txtConfirmPassword">Confirm Password</label>
+            @*<input type="password" name="confirmPassword" id="txtConfirmPassword" placeholder="Confirm Password" required>*@
+            @Html.TextBox("confirmPassword", "" ,new { type = "password" })
+            <br>
+            <br>
+            <label>Gender</label>
+            @*<input type="radio" id="rbGenderMale" name="gender" value="Male" checked>Male
+                <input type="radio" id="rbGenderFemale" name="gender" value="Female">Female*@
+            @Html.RadioButtonFor(model => model.Gender, "Male") Male
+            <br />
+            @Html.RadioButtonFor(model => model.Gender, "Female") Female
+            <br>
+            <br>
+            <span class="errorMsg"></span>
+            <br />
+            <br />
+            <input type="submit" class="btn btn-primary" id="btnRegister" value="Register">
+
+        </div>
+    }
+</div>
+
+    
+
+<script>
+    $(document).ready(function () {
+        var fullURL = window.location.search.substring(1);
+        var parameter = fullURL.split('?');
+        
+        if (parameter == 'm') {
+            $('.errorMsg').text("Please fill all the form");
+        } else if (parameter == 'p') {
+            $('.errorMsg').text("Confirm Password is not match");
+        } else if (parameter == "exists") {
+            $('.errorMsg').text("Username already used");
+        }
+    });
+</script>
